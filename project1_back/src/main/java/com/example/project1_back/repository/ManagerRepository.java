@@ -10,5 +10,6 @@ public interface ManagerRepository extends JpaRepository<Manager, Long> {
 
     Manager save(Manager manager);
 
+
 }
 

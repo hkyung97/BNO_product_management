@@ -10,7 +10,7 @@
       <div class="text">
         <div style="margin-bottom: 50%;"></div>
         <h1 v-if="empid">{{ empid }}님,상품관리자 페이지에 오신 것을 환영합니다.</h1>
-        <h1 v-else>상품관리자 페이지에 오신 것을 환영합니다</h1>
+        <h1 v-else>상품관리자 페이지에 오신 것을 환영합니다!</h1>
       </div>
     </div>
   </div>

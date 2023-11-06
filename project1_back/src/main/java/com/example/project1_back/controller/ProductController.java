@@ -40,12 +40,39 @@ public class ProductController {
         System.out.println(prdid);
 
         Product product = productRepository.findByPrdid(prdid);
-        System.out.println(product);
+//        System.out.println(product);
         if (product != null) {
             return ResponseEntity.ok(product);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @DeleteMapping ("/api/products/{prdid}")
+    public ResponseEntity<String> deleteProductById(@PathVariable("prdid") String prdid) {
+        try {
+            productRepository.deleteById(prdid);
+            return ResponseEntity.ok(prdid + " 가 삭제 되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting product");
+        }
+    }
+
+    @PutMapping("/api/products/{prdid}")
+    public ResponseEntity<String> editProduct(@PathVariable String prdid, @RequestBody Product editedProduct) {
+        Product existingProduct = productRepository.findByPrdid(prdid);
+        if (existingProduct == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // editedProduct의 내용으로 existingProduct를 업데이트
+        existingProduct.setPrdname(editedProduct.getPrdname());
+        existingProduct.setPrdprice(editedProduct.getPrdprice());
+        existingProduct.setPrddes(editedProduct.getPrddes());
+
+        // 저장 후 응답
+        productRepository.save(existingProduct);
+        return ResponseEntity.ok("Product with ID " + prdid + " has been updated.");
     }
 }
 

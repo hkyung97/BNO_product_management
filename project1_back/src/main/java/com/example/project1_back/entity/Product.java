@@ -2,8 +2,10 @@ package com.example.project1_back.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "product")
 public class Product {
@@ -29,4 +31,5 @@ public class Product {
 
     @Column(name = "IMG_PATH", length = 100)
     private String imgpath;
+
 }

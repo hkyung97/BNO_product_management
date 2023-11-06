@@ -44,42 +44,35 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
+<script setup>
+import axios from 'axios';
 import router from '@/scripts/router';
-export default {
-  name: "ManagerRegister",
-  data() {
-    return {
-      manager: {
-        empid: "",
-        empname: "",
-        depname: "",
-        cmpid: "",
-        empadd: "",
-        empcontact: "",
-        emppos: ""
-      },
-    };
-  },
-  methods: {
+import { ref } from 'vue';
 
-    submitForm() {
-      console.log("Selected company:", this.manager);
-      this.addManager();
-    },
+const manager = ref({
+  empid: "",
+  empname: "",
+  depname: "",
+  cmpid: "",
+  empadd: "",
+  empcontact: "",
+  emppos: ""
+});
 
-    async addManager() {
-      console.log("Selected company:", this.manager);
-      try {
-        const response = await axios.post("http://localhost:8080/api/manager/add", this.manager);
-        alert(response.data); // 성공 메시지 또는 다른 처리를 수행
-        router.push({ path: "/" });
-      } catch (error) {
-        alert("Error adding manager: " + error.message);
-      }
-    },
-  },
+const submitForm = () => {
+  console.log("Selected company:", manager.value);
+  addManager();
+};
+
+const addManager = async () => {
+  console.log("Selected company:", manager.value);
+  try {
+    const response = await axios.post("http://localhost:8080/api/manager/add", manager.value);
+    alert(response.data);
+    router.push({ path: "/" });
+  } catch (error) {
+    alert("Error adding manager: " + error.message);
+  }
 };
 </script>
 

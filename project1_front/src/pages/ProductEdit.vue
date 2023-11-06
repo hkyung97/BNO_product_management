@@ -2,14 +2,10 @@
   <div class="container">
     <div class="Rectangle1">
       <div>
-        <div class="title">상품 상세</div>
+        <div class="title">상품 정보 수정</div>
         &nbsp;
         <div class="button">
-          <!-- <router-link to = "/productedit"> -->
-          <router-link :to="'/productedit/' + (product1 ? product1.prdid : '')">
-          <button class="register-button">수정</button>
-          </router-link>&nbsp;
-          <button class="register-button1" @click="confirmDelete">삭제</button>
+          <button class="register-button" @click="updateProduct">수정완료</button>
         </div>
       </div>
       &nbsp;
@@ -20,36 +16,33 @@
         <div class="row">
           <div class="subtitle">
             <span>상품식별자</span>
-            <div class="Rectangle4">
+            &nbsp;
+            <!-- <div class="Rectangle4"> -->
               {{ product1.prdid }}
-            </div>
+            <!-- </div> -->
           </div>
           <div class="subtitle">
             <span>회사식별자</span>
-            <div class="Rectangle4">
+            &nbsp;
+            <!-- <div class="Rectangle4"> -->
               {{ product1.cmpid }}
-            </div>
+            <!-- </div> -->
           </div>
           <div class="subtitle">
             <span>상품이름</span>
-            <div class = "Rectangle4">
-              {{ product1.prdname }}
-            </div>
+            <input v-model="product1.prdname" class="Rectangle4" />
           </div>
           <div class="subtitle">
             <span>상품가격</span>
-            <div class="Rectangle4">
-              {{ lib.getNumberFormatted(product1.prdprice) }}원
-            </div>
+            <input v-model="product1.prdprice" class="Rectangle4" />
           </div>
         </div>
       </div>
+      &nbsp;
       <div class="subtitle1" v-if="product1">
         <span>상품내용</span>
         &nbsp;
-        <div class="Rectangle8">
-          {{ product1.prddes }}
-        </div>
+          <textarea v-model="product1.prddes" class="Rectangle8" />
       </div>
       <div class="loading" v-else>
         데이터를 불러오는 중...
@@ -58,43 +51,45 @@
   </div>
 </template>
 
+
 <script setup>
-import lib from "@/scripts/lib";
+// import lib from "@/scripts/lib";
 import axios from 'axios';
 import { ref, onMounted } from 'vue'; // ref 추가
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
-const router = useRouter(); // 라우터 인스턴스 가져오기
+const router = useRouter();
 const prdid = route.params.prdid;
 const product1 = ref(null); // ref로 데이터 상태 정의
 
 const fetchData = async () => {
   try {
-    console.log('API 요청 시작');
     const response = await axios.get(`/api/products/${prdid}`);
-    console.log('API 응답:', response.data);
     product1.value = response.data;
   } catch (error) {
     console.error('데이터를 불러오는 중 에러 발생:', error);
   }
 };
 
-const prdDelete = async () => {
-  // 삭제 로직을 작성하고 product1.value를 사용하여 필요한 데이터를 가져올 수 있음
+const updateProduct = async () => {
   try {
-    // 삭제 요청을 보내고 성공하면 다시 홈 페이지로 이동
-    await axios.delete(`/api/products/${prdid}`);
-    // 성공한 후 홈 페이지로 이동
-    router.push('/productlist');
-  } catch (error) {
-    console.error('상품 삭제 중 에러 발생:', error);
-  }
-};
+    // product1 객체에 있는 정보로 업데이트 요청을 생성
+    const updatedProduct = {
+      prdid: product1.value.prdid,
+      cmpid: product1.value.cmpid,
+      prdname: product1.value.prdname,
+      prdprice: product1.value.prdprice,
+      prddes: product1.value.prddes,
+    };
 
-const confirmDelete = () => {
-  if (window.confirm('정말로 삭제하시겠습니까?')) {
-    prdDelete();
+    // PUT 또는 PATCH 요청을 보내어 상품 정보를 업데이트
+    await axios.put(`/api/products/${prdid}`, updatedProduct);
+
+    // 업데이트 성공 시 메시지 표시 또는 리다이렉트 등의 작업 수행
+    router.push(`/product/${prdid}`);
+  } catch (error) {
+    console.error('상품 업데이트 중 에러 발생:', error);
   }
 };
 
@@ -119,7 +114,6 @@ onMounted(() => {
 
 .body-container {
   
-  
   width: 50%;
   margin: 0 auto; /* 가로 가운데 정렬을 위한 margin 속성 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
@@ -139,7 +133,7 @@ onMounted(() => {
   margin-top: -45px; /* 위로 10px 올립니다. */
   background: #fefefe;
   border: 2px #0b4ef9 solid;
-  margin-left: 180px; /* 위로 10px 올립니다. */
+  margin-left: 30px; /* 위로 10px 올립니다. */
   text-align: center;
 }
 
@@ -186,7 +180,7 @@ onMounted(() => {
   direction: ltr;
  
   margin-left: 10px; /* 왼쪽 여백을 10px로 설정 */
-  margin-top: 50px; /* 위쪽 여백을 10px로 설정 */
+  margin-top: 10px; /* 위쪽 여백을 10px로 설정 */
 }
 
 .Rectangle8 {
@@ -196,6 +190,7 @@ onMounted(() => {
   border: 2px #0b4ef9 solid;
   margin: 0 auto; /* 가로 가운데 정렬을 위한 margin 속성 */
   justify-content: center; /* 가로 방향 가운데 정렬 */
+  margin-bottom: 50px; /* 위쪽 여백을 10px로 설정 */
   
 }
 
@@ -222,16 +217,7 @@ onMounted(() => {
   border-radius: 30px;
   color: #fefefe;
   font-size: 20px;
-  
-}
-
-.register-button1 {
-  width: 100px;
-  height: 48px;
-  background: #f10404;
-  border-radius: 30px;
-  color: #fefefe;
-  font-size: 20px;
+  margin-right: 10%; /* 오른쪽 여백을 10px로 설정합니다. */
 }
 
 .register-button:hover, .register-button1:hover {

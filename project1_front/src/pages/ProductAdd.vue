@@ -83,46 +83,34 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-export default {
-  name: "ProductAdd",
-  data() {
-    return {
-      product: {
-        imagePreview : null,
-        prdid: "",
-        prdname: "",
-        prdprice: "",
-        prddes: "",
-        cmpid: ""
-      },
-       
-    };
-  },
-  methods: {
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-    submitForm(){
-      this.addProduct();
-    },
+const product = ref({
+  imagePreview: null,
+  prdid: "",
+  prdname: "",
+  prdprice: "",
+  prddes: "",
+  cmpid: "",
+});
 
-    
+const addProduct = async () => {
+  console.log("Selected company:", product.value.cmpid);
+  try {
+    const response = await axios.post("/api/products/add", product.value);
+    alert(response.data);
+    const router = useRouter();
+    router.push("/productlist");
+  } catch (error) {
+    alert("Error adding product: " + error.message);
+  }
+};
 
-    async addProduct() {
-
-      // this.updateSelectedCompany(); //비동기 함수일 때 await를 사용
-      console.log("Selected company:", this.product.cmpid);
-      try {
-        const response = await axios.post("/api/products/add", this.product);
-        alert(response.data); // 성공 메시지 또는 다른 처리를 수행
-        // 등록에 성공하면 productlist 페이지로 이동
-        
-        this.$router.push({ path: '/productlist' });
-      } catch (error) {
-        alert("Error adding product: " + error.message);
-      }
-    },
-  },
+const submitForm = () => {
+  addProduct();
 };
 </script>
 

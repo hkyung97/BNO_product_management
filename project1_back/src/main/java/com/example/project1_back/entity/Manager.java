@@ -26,8 +26,14 @@ public class Manager {
     @Column(name = "CMP_ID", length = 8, nullable = false)
     private String cmpid;
 
+    @Column(name = "EMP_ADDNUM", nullable = false)
+    private int empaddnum;
+
     @Column(name = "EMP_ADD", length = 100, nullable = false)
     private String empadd;
+
+    @Column(name = "EMP_ADDDETAIL", length = 100, nullable = false)
+    private String empadddetail;
 
     @Column(name = "EMP_CONTACT", length = 15, nullable = false)
     private String empcontact;

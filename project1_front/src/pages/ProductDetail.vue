@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="container">
     <div class="Rectangle1">
       <div>
@@ -7,9 +7,9 @@
         <div class="button">
           <!-- <router-link to = "/productedit"> -->
           <router-link :to="'/productedit/' + (product1 ? product1.prdid : '')">
-          <button class="register-button">수정</button>
+          <button class="register-button" v-if="isCurrentUserAuthor">수정</button>
           </router-link>&nbsp;
-          <button class="register-button1" @click="confirmDelete">삭제</button>
+          <button class="register-button1" v-if="isCurrentUserAuthor" @click="confirmDelete">삭제</button>
         </div>
       </div>
       &nbsp;
@@ -61,13 +61,17 @@
 <script setup>
 import lib from "@/scripts/lib";
 import axios from 'axios';
-import { ref, onMounted } from 'vue'; // ref 추가
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
-const router = useRouter(); // 라우터 인스턴스 가져오기
+const router = useRouter();
 const prdid = route.params.prdid;
-const product1 = ref(null); // ref로 데이터 상태 정의
+const product1 = ref(null);
+
+// 세션에서 현재 로그인한 사용자 정보 가져오기
+const currentUserID = ref(sessionStorage.getItem('empid'));
+let isCurrentUserAuthor = ref(false); // isCurrentUserAuthor를 블록 외부에서 정의
 
 const fetchData = async () => {
   try {
@@ -75,17 +79,20 @@ const fetchData = async () => {
     const response = await axios.get(`/api/products/${prdid}`);
     console.log('API 응답:', response.data);
     product1.value = response.data;
+
+    // 작성자의 아이디를 가져온 후, 현재 로그인한 사용자와 비교하여 버튼을 표시할지 결정
+    const authorID = response.data.empid;
+    if (authorID) {
+      isCurrentUserAuthor.value = currentUserID.value === authorID;
+    }
   } catch (error) {
     console.error('데이터를 불러오는 중 에러 발생:', error);
   }
 };
 
 const prdDelete = async () => {
-  // 삭제 로직을 작성하고 product1.value를 사용하여 필요한 데이터를 가져올 수 있음
   try {
-    // 삭제 요청을 보내고 성공하면 다시 홈 페이지로 이동
     await axios.delete(`/api/products/${prdid}`);
-    // 성공한 후 홈 페이지로 이동
     router.push('/productlist');
   } catch (error) {
     console.error('상품 삭제 중 에러 발생:', error);
@@ -99,8 +106,9 @@ const confirmDelete = () => {
 };
 
 onMounted(() => {
-  fetchData();
+  fetchData(); // onMounted 함수 내에서 데이터를 가져옵니다.
 });
+
 </script>
 
 

@@ -25,13 +25,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed} from "vue";
 import { useStore } from "vuex";
-import axios from "axios";
 
-const form = ref({
-  empid: "",
-});
+
+// const form = ref({
+//   empid: "",
+// });
 
 const store = useStore();
 
@@ -46,23 +46,25 @@ const toggleSwitch = () => {
   store.commit("switchMode", !isSwitchOn.value); // 스위치를 토글할 때 Vuex 스토어의 모드 값을 변경
 
   if (isSwitchOn.value) {
-      console.log("스위치가 켜졌습니다 (관리자 모드).");
-      // 스위치가 켜진 경우에 수행할 동작 추가 (관리자 모드)
-    } else {
-      console.log("스위치가 꺼졌습니다 (사용자 모드).");
-      // 스위치가 꺼진 경우에 수행할 동작 추가 (사용자 모드)
-    }
+    console.log("스위치가 켜졌습니다 (관리자 모드).");
+    // 스위치가 켜진 경우에 수행할 동작 추가 (관리자 모드)
+  } else {
+    console.log("스위치가 꺼졌습니다 (사용자 모드).");
+    // 스위치가 꺼진 경우에 수행할 동작 추가 (사용자 모드)
+  }
 };
 
-const login = async () => {
-  const response = await axios.post("/api/manager/login", form.value);
-  store.commit("setAccount", response.data);
-};
+// 로그인 함수를 onMounted 훅 내에서 호출
+// onMounted(() => {
+//   login();
+// });
 
-// 로그인 함수를 setup 함수 내에서 호출하거나, 컴포넌트 라이프사이클 훅에서 호출할 수 있습니다.
-// 이 예제에서는 setup 함수 내에서 호출하였습니다.
-login();
+// const login = async () => {
+//   const response = await axios.post("/api/manager/login", form.value);
+//   store.commit("setAccount", response.data);
+// };
 </script>
+
 
 <style scoped>
 .home {

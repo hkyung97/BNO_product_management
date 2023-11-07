@@ -5,19 +5,39 @@
         <div class="row">
           <div class="col-sm-4 py-4">
             <h4>사이트맵</h4>
-            <ul class="list-inline"> <!-- 변경 -->
-              <li class="list-inline-item"> <!-- 변경 -->
+            <ul class="list-inline">
+              <!-- 변경 -->
+              <li class="list-inline-item">
+                <!-- 변경 -->
                 <router-link to="/" class="text-black">메인화면</router-link>
               </li>
-              <li class="list-inline-item"> <!-- 변경 -->
-                <router-link to="/login" class="text-black" v-if="!$store.state.account.empid">로그인</router-link>
-                <a to="/login" class="text-black" @click="logout()" v-else>로그아웃</a>
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link
+                  to="/login"
+                  class="text-black"
+                  v-if="!$store.state.account.empid"
+                  >로그인</router-link
+                >
+                <a to="/login" class="text-black" @click="logout()" v-else
+                  >로그아웃</a
+                >
               </li>
-              <li class="list-inline-item"> <!-- 변경 -->
-                <router-link to="/productlist" class="text-black">상품관리</router-link>
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link to="/productlist" class="text-black"
+                  >상품관리</router-link
+                >
               </li>
-              <li class="list-inline-item"> <!-- 변경 -->
-                <router-link to="/managerregister" class="text-black">회원가입</router-link>
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link
+                  to="/managerregister"
+                  class="text-black"
+                  v-if="!empid"
+                >
+                  회원가입
+                </router-link>
               </li>
             </ul>
           </div>
@@ -62,7 +82,13 @@
 
 <script setup>
 import router from "@/scripts/router";
-import store from "@/scripts/store";
+// import store from "@/scripts/store";
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+// Vuex 스토어에서 empid를 가져옵니다.
+const empid = computed(() => store.state.account.empid);
 
 const logout = () => {
   store.commit("setAccount", 0);
@@ -73,7 +99,7 @@ const logout = () => {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.row{
+.row {
   background-color: rgb(248, 245, 211);
 }
 

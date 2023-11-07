@@ -21,25 +21,16 @@
     <label for="empadd">기본 주소</label>
   </div>
 
-  <div class="form-floating mb-4">
-    <input
-      type="text"
-      class="form-control"
-      id="empadddetail"
-      v-model="manager.empadddetail"
-    />
-    <label for="empadddetail">상세주소</label>
-  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps, defineEmits, onMounted } from "vue";
 
-const manager = ref({
-  empaddnum: "",
-  empadd: "",
-  empadddetail: "",
-});
+const props = defineProps(["manager"]);
+const emits = defineEmits(["update:manager"]); // Define emits to send data back to parent
+
+const manager = ref(props.manager);
+
 
 const showApi = () => {
   new window.daum.Postcode({
@@ -63,14 +54,24 @@ const showApi = () => {
       if (fullRoadAddr !== "") {
         fullRoadAddr += extraRoadAddr;
       }
-
+      
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
       manager.value.empaddnum = data.zonecode; // 5자리 우편번호 사용
       manager.value.empadd = fullRoadAddr;
-      manager.value.empadddetail = data.jibunAddress; // 상세주소를 추가합니다.
+      
     },
-  }).open(document.querySelector(".daummap"));
+  }).open();
+  // 데이터를 부모 컴포넌트로 emit
+  emits("update:manager", manager.value);
 };
+
+// Address 컴포넌트가 마운트된 후에 실행
+onMounted(() => {
+  // 예: 다른 데이터를 불러오거나 초기화하는 로직을 추가할 수 있습니다.
+});
 </script>
 
-<style scoped></style>
+
+<style scoped>
+
+</style>

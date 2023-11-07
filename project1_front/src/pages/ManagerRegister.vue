@@ -40,7 +40,17 @@
       </select>
     </div>
 
-    <Address/>
+    <Address v-model:manager="manager" />
+
+    <div class="form-floating mb-4">
+      <input
+        type="text"
+        class="form-control"
+        id="empadddetail"
+        v-model="manager.empadddetail"
+      />
+      <label for="empadddetail">상세 주소</label>
+    </div>
 
     <div class="form-floating mb-4">
       <input
@@ -65,7 +75,6 @@
     <button class="btn btn-primary w-100 py-2" @click="submitForm">
       회원가입
     </button>
-    
   </div>
 </template>
 
@@ -76,7 +85,7 @@ import { ref } from "vue";
 import Address from "@/components/Address.vue";
 
 const manager = ref({
-   empid: "",
+  empid: "",
   empname: "",
   depname: "",
   cmpid: "",

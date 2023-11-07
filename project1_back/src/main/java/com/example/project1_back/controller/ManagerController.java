@@ -2,6 +2,7 @@ package com.example.project1_back.controller;
 
 import com.example.project1_back.entity.Manager;
 import com.example.project1_back.repository.ManagerRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ public class ManagerController {
     ManagerRepository managerRepository;
 
     @PostMapping("/api/manager/login")
-    public String login(@RequestBody Map<String, String> params) { //@RequestBody요청일 때의 json 규칙 Map<String, String>
-        Manager manager = managerRepository.findByempid(params.get("empid"));
+    public String login(@RequestBody Map<String, String> params,
+                        HttpServletResponse res) { //@RequestBody요청일 때의 json 규칙 Map<String, String>
+        Manager manager = managerRepository.findByEmpidAndEmppassword(params.get("empid"), params.get("emppassword"));
         System.out.println(manager);
         if (manager != null) {
             return manager.getEmpid();

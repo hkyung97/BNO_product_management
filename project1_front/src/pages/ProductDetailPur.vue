@@ -6,10 +6,10 @@
         &nbsp;
         <div class="button">
           <!-- <router-link to = "/productedit"> -->
-          <router-link :to="'/productedit/' + (product1 ? product1.prdid : '')">
-          <button class="register-button" v-if="isCurrentUserAuthor">수정</button>
+          <router-link :to="'/payment/' + (product1 ? product1.prdid : '')">
+          <button class="register-button">구매</button>
           </router-link>&nbsp;
-          <button class="register-button1" v-if="isCurrentUserAuthor" @click="confirmDelete">삭제</button>
+          <button class="register-button1" v-if="isCurrentUserAuthor">문의하기</button>
         </div>
       </div>
       &nbsp;
@@ -18,18 +18,6 @@
       </div>
       <div class="body-container1" v-if="product1">
         <div class="row">
-          <div class="subtitle">
-            <span>상품식별자</span>
-            <div class="Rectangle4">
-              {{ product1.prdid }}
-            </div>
-          </div>
-          <div class="subtitle">
-            <span>회사식별자</span>
-            <div class="Rectangle4">
-              {{ product1.cmpid }}
-            </div>
-          </div>
           <div class="subtitle">
             <span>상품이름</span>
             <div class = "Rectangle4">
@@ -62,10 +50,10 @@
 import lib from "@/scripts/lib";
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute} from 'vue-router';
 
 const route = useRoute();
-const router = useRouter();
+// const router = useRouter();
 const prdid = route.params.prdid;
 const product1 = ref(null);
 
@@ -87,21 +75,6 @@ const fetchData = async () => {
     }
   } catch (error) {
     console.error('데이터를 불러오는 중 에러 발생:', error);
-  }
-};
-
-const prdDelete = async () => {
-  try {
-    await axios.delete(`/api/products/${prdid}`);
-    router.push('/productlist');
-  } catch (error) {
-    console.error('상품 삭제 중 에러 발생:', error);
-  }
-};
-
-const confirmDelete = () => {
-  if (window.confirm('정말로 삭제하시겠습니까?')) {
-    prdDelete();
   }
 };
 

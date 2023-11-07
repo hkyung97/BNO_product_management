@@ -8,6 +8,11 @@ import ProductDetail from "@/pages/ProductDetail.vue";
 import ManagerRegister from "@/pages/ManagerRegister.vue";
 import ProductEdit from "@/pages/ProductEdit.vue";
 import Address from "@/components/Address.vue";
+import ProductPurchasing from "@/pages/ProductPurchasing.vue"
+import ProductDetailPur from "@/pages/ProductDetailPur.vue";
+import Payment from "@/pages/Payment.vue";
+import MemberRegister from "@/pages/MemberRegister.vue";
+import MemberManager from "@/pages/MemberManager.vue";
 
 
 // router를 사용 하겠다.
@@ -22,6 +27,11 @@ const routes = [
     {path: '/managerregister', component: ManagerRegister},
     {path: '/productedit/:prdid', component: ProductEdit},
     {path: '/address', component: Address},
+    {path: '/productpurchasing', component: ProductPurchasing},
+    {path: '/productdetail/:prdid', component: ProductDetailPur},
+    {path: '/payment/:prdid', component:Payment},
+    {path: '/memberregister', component: MemberRegister},
+    {path: '/membermanager', component: MemberManager},
 ]
 
 //

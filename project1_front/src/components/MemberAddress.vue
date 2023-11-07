@@ -3,11 +3,11 @@
     <input
       type="text"
       class="form-control"
-      id="empaddnum"
-      v-model="manager.empaddnum"
+      id="memberaddnum"
+      v-model="member.memberaddnum"
     />
     &nbsp;
-    <label for="empaddnum">우편번호</label>
+    <label for="memberaddnum">우편번호</label>
     <div ref="embed"></div>
     <button @click="showApi">우편번호 찾기</button>
   </div>
@@ -16,10 +16,10 @@
     <input
       type="text"
       class="form-control"
-      id="empadd"
-      v-model="manager.empadd"
+      id="memberadd"
+      v-model="member.memberadd"
     />
-    <label for="empadd">기본 주소</label>
+    <label for="memberadd">기본 주소</label>
   </div>
 
 </template>
@@ -27,10 +27,10 @@
 <script setup>
 import { ref, defineProps, defineEmits, onMounted } from "vue";
 
-const props = defineProps(["manager"]);
-const emits = defineEmits(["update:manager"]); // Define emits to send data back to parent
+const props = defineProps(["member"]);
+const emits = defineEmits(["update:member"]); // Define emits to send data back to parent
 
-const manager = ref(props.manager);
+const member = ref(props.member);
 
 
 const showApi = () => {
@@ -57,13 +57,13 @@ const showApi = () => {
       }
       
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      manager.value.empaddnum = data.zonecode; // 5자리 우편번호 사용
-      manager.value.empadd = fullRoadAddr;
+      member.value.memberaddnum = data.zonecode; // 5자리 우편번호 사용
+      member.value.memberadd = fullRoadAddr;
       
     },
   }).open();
   // 데이터를 부모 컴포넌트로 emit
-  emits("update:manager", manager.value);
+  emits("update:member", member.value);
 };
 
 // Address 컴포넌트가 마운트된 후에 실행

@@ -39,6 +39,12 @@
                   회원가입
                 </router-link>
               </li>
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link to="/productpurchasing" class="text-black"
+                  >상품구매</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
@@ -82,12 +88,12 @@
 
 <script setup>
 import router from "@/scripts/router";
-// import store from "@/scripts/store";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
-const store = useStore();
 // Vuex 스토어에서 empid를 가져옵니다.
+// 저장된 사용자 아이디를 가져오는 코드
+const store = useStore();
 const empid = computed(() => store.state.account.empid);
 
 const logout = () => {
@@ -100,10 +106,13 @@ const logout = () => {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .row {
+  
   background-color: rgb(248, 245, 211);
 }
 
 .text-black {
   font-weight: bold;
 }
+
+
 </style>

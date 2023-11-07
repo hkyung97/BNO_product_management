@@ -80,3 +80,9 @@ export default {
   name: "ProductAdd",
 };
 </script>
+
+<style scoped>
+.container {
+  margin-top: 30%;
+}
+</style>

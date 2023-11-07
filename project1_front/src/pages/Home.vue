@@ -25,18 +25,13 @@
 </template>
 
 <script setup>
-import { computed} from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 
-
-// const form = ref({
-//   empid: "",
-// });
-
 const store = useStore();
-
 // Vuex 스토어에서 empid를 가져옵니다.
 const empid = computed(() => store.state.account.empid);
+
 
 // Vuex 스토어에서 사용자 모드 정보를 가져옵니다.
 const isSwitchOn = computed(() => store.state.isUserMode);
@@ -54,15 +49,6 @@ const toggleSwitch = () => {
   }
 };
 
-// 로그인 함수를 onMounted 훅 내에서 호출
-// onMounted(() => {
-//   login();
-// });
-
-// const login = async () => {
-//   const response = await axios.post("/api/manager/login", form.value);
-//   store.commit("setAccount", response.data);
-// };
 </script>
 
 

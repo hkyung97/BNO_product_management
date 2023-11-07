@@ -17,6 +17,9 @@ public class Manager {
     @Column(name = "EMP_ID")
     private String empid;
 
+    @Column(name = "EMP_PASSWORD", length = 8, nullable = false)
+    private String emppassword;
+
     @Column(name = "EMP_NAME", length = 8, nullable = false)
     private String empname;
 

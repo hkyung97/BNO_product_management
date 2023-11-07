@@ -70,12 +70,11 @@
         <div class="row">
           <div class="subtitle1">
             <p>상품설명</p>
-            <input
-              type="text"
+            <textarea
               class="Rectangle8"
               placeholder="상품에 대한 설명을 입력하세요"
               v-model="product.prddes"
-            />
+            ></textarea>
           </div>
         </div>
       </form>
@@ -120,6 +119,7 @@ const submitForm = () => {
   display: flex;
   flex-direction: row;
   align-items: center; /* 요소들을 수직 가운데로 정렬 */
+  margin-top: 5%;
 }
 
 .row {
@@ -158,7 +158,7 @@ const submitForm = () => {
 
 .Rectangle1 {
   width: 900px;
-  height: 1200px;
+  height: 1000px;
   background: #fefefe;
   border: 2px #0b4ef9 solid;
   margin-top: 5%; /* 위쪽 여백 추가 */
@@ -194,12 +194,14 @@ const submitForm = () => {
 
 .Rectangle8 {
   width: 90%;
-  height: 500px;
+  height: 450px; /* 수정: 높이 조정 */
   background: #fefefe;
-  border: 2px #0b4ef9 solid;
-  margin: 0 auto; /* 가로 가운데 정렬을 위한 margin 속성 */
-  justify-content: center; /* 가로 방향 가운데 정렬 */
-  align-items: center; /* 세로 방향 가운데 정렬 */
+  border: 2px solid #0b4ef9;
+  margin: 0 auto;
+  padding: 10px; /* 수정: 내부 여백 추가 */
+  justify-content: center;
+  align-items: center;
+  resize: none; /* 수정: 크기 조정 금지 */
 }
 
 .Rectangle6 {

@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ManagerRepository extends JpaRepository<Manager, Long> {
-    Manager findByempid(String empid);
+public interface ManagerRepository extends JpaRepository<Manager, Integer> {
+    Manager findByEmpidAndEmppassword(String empid, String emppassword);
 
     Manager save(Manager manager);
 
 
 }
+
 

@@ -1,13 +1,10 @@
 <template>
   <div class="card shadow-sm">
-    <router-link :to="'/product/' + products.prdid">
+    <router-link :to="'/productdetail/' + products.prdid">
       <div class="img" :style="{ backgroundImage: `url(${products.imgpath})` }"></div>
     </router-link>
     <div class="card-body">
       <p class="card-text">
-        <span>상품ID : {{ products.prdid }}</span>
-      </p>
-      <p>
         <span>상품이름 : {{ products.prdname }}</span>
       </p>
       <p>

@@ -1,6 +1,6 @@
 <template>
   <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+    <h1 class="h3 mb-3 fw-normal">개인 회원가입</h1>
 
     <div class="form-floating mb-4">
       <input

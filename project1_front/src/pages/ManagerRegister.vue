@@ -1,6 +1,6 @@
 <template>
   <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+    <h1 class="h3 mb-3 fw-normal">관리자 회원가입</h1>
 
     <div class="form-floating mb-4">
       <input
@@ -114,14 +114,12 @@ const addManager = async () => {
 </script>
 
 <style scoped>
-html,
-body {
-  height: 100%;
-}
-
 .form-signin {
   max-width: 50%;
   padding: 1rem;
+  margin-top: 5%;
+  padding-top: 5%; /* 위 여백 추가 */
+  padding-bottom: 5%; /* 아래 여백 추가 */
 }
 
 /* .form-signin .form-floating:focus-within {

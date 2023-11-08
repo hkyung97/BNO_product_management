@@ -10,7 +10,7 @@ import ProductEdit from "@/pages/ProductEdit.vue";
 import Address from "@/components/Address.vue";
 import ProductPurchasing from "@/pages/ProductPurchasing.vue"
 import ProductDetailPur from "@/pages/ProductDetailPur.vue";
-import Payment from "@/pages/Payment.vue";
+import Payment from "@/components/Payment.vue";
 import MemberRegister from "@/pages/MemberRegister.vue";
 import MemberManager from "@/pages/MemberManager.vue";
 
@@ -32,6 +32,7 @@ const routes = [
     {path: '/payment/:prdid', component:Payment},
     {path: '/memberregister', component: MemberRegister},
     {path: '/membermanager', component: MemberManager},
+
 ]
 
 //

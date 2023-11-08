@@ -13,15 +13,8 @@
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-                <router-link
-                  to="/login"
-                  class="text-black"
-                  v-if="!$store.state.account.empid"
-                  >로그인</router-link
-                >
-                <a to="/login" class="text-black" @click="logout()" v-else
-                  >로그아웃</a
-                >
+<router-link to="/login" class="text-black" v-if="!isLoggedIn">로그인</router-link>
+      <a to="/login" class="text-black" @click="logout" v-if="isLoggedIn">로그아웃</a>
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
@@ -31,11 +24,7 @@
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-                <router-link
-                  to="/managerregister"
-                  class="text-black"
-                  v-if="!empid"
-                >
+                <router-link to="/membermanager" class="text-black">
                   회원가입
                 </router-link>
               </li>
@@ -87,32 +76,35 @@
 </template>
 
 <script setup>
-import router from "@/scripts/router";
 import { computed } from "vue";
-import { useStore } from "vuex";
+// import store from "@/scripts/store";
+import { useStore } from 'vuex';
 
-// Vuex 스토어에서 empid를 가져옵니다.
-// 저장된 사용자 아이디를 가져오는 코드
 const store = useStore();
-const empid = computed(() => store.state.account.empid);
+
+const isLoggedIn = computed(() => {
+  const empid = sessionStorage.getItem("empid");
+  const memberid = sessionStorage.getItem("memberid");
+  return empid || memberid;
+});
 
 const logout = () => {
-  store.commit("setAccount", 0);
-  sessionStorage.removeItem("empid");
-  router.push({ path: "/" });
+  if (sessionStorage.getItem("empid")) {
+    sessionStorage.removeItem("empid");
+    store.commit("setEmpId", null); // Vuex 스토어에서도 제거
+  } else if (sessionStorage.getItem("memberid")) {
+    sessionStorage.removeItem("memberid");
+    store.commit("setMemberId", null); // Vuex 스토어에서도 제거
+  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .row {
-  
   background-color: rgb(248, 245, 211);
 }
 
 .text-black {
   font-weight: bold;
 }
-
-
 </style>

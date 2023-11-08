@@ -31,6 +31,7 @@ public class ManagerController {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+
     @PostMapping("/api/manager/add")
     public ResponseEntity<String> addManager(@RequestBody Manager manager) {
         try {

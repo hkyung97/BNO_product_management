@@ -1,31 +1,31 @@
 <template>
-  <Header/>
-  <router-view/>
-  <Footer/>
+  <Header />
+  <router-view />
+  <Footer />
 </template>
 
-
 <script>
-import Footer from './components/Footer.vue';
-import Header from './components/Header';
-import store from './scripts/store';
-
-
+import Footer from "./components/Footer.vue";
+import Header from "./components/Header";
+import store from "./scripts/store";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Footer,
-    Header
+    Header,
   },
-  setup(){
+  setup() {
     const empid = sessionStorage.getItem("empid");
+    const memberid = sessionStorage.getItem("memberid");
 
     if (empid) {
-      store.commit("setAccount", empid);
+      store.commit("setEmpId", empid);
+    } else if (memberid) {
+      store.commit("setMemberId", memberid);
     }
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -46,10 +46,11 @@ export default {
 .b-example-divider {
   width: 100%;
   height: 3rem;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
+  background-color: rgba(0, 0, 0, 0.1);
+  border: solid rgba(0, 0, 0, 0.15);
   border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1),
+    inset 0 0.125em 0.5em rgba(0, 0, 0, 0.15);
 }
 
 .b-example-vr {
@@ -59,7 +60,7 @@ export default {
 }
 
 .bi {
-  vertical-align: -.125em;
+  vertical-align: -0.125em;
   fill: currentColor;
 }
 

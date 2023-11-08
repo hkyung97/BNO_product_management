@@ -2,13 +2,14 @@ package com.example.project1_back.controller;
 
 import com.example.project1_back.entity.Member;
 import com.example.project1_back.repository.MemberRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
@@ -37,6 +38,19 @@ public class MemberController {
             return ResponseEntity.ok("회원가입이 완료 되었습니다. 구매자권한으로 이용이 가능합니다." + savedMember.getMemberid());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving Member");
+        }
+    }
+
+    @GetMapping("/api/product/{prdid}")
+    public ResponseEntity<Member> getCurrentUser(@PathVariable("prdid") HttpServletRequest request) {
+        // 세션에서 현재 사용자 정보 가져오기
+        HttpSession session = request.getSession();
+        Member currentMember = (Member) session.getAttribute("currentMember");
+
+        if (currentMember != null) {
+            return ResponseEntity.ok(currentMember);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }

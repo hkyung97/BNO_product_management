@@ -2,7 +2,12 @@
   <!-- 사용자 모드와 관리자 모드를 선택하는 버튼 추가 -->
   <div>
     <label class="switch">
-      <input type="checkbox" id="toggleSwitch" v-model="isSwitchOn" @change="toggleSwitch" />
+      <input
+        type="checkbox"
+        id="toggleSwitch"
+        v-model="isSwitchOn"
+        @change="toggleSwitch"
+      />
       <span class="slider round"></span>
     </label>
   </div>
@@ -16,9 +21,12 @@
       <div class="text">
         <div style="margin-bottom: 50%"></div>
         <h1 v-if="empid">
-          {{ empid }}님,상품관리자 페이지에 오신 것을 환영합니다.
+          {{ empid }}님, 안녕하세요 상품 등록 및 수정 삭제가 가능합니다.
         </h1>
-        <h1 v-else>상품관리자 페이지에 오신 것을 환영합니다!</h1>
+        <h1 v-else-if="memberid">
+          {{ memberid }}님, 안녕하세요 상품구매가 가능합니다.
+        </h1>
+        <h1 v-else>저희 사이트를 방문해 주셔서 감사합니다!</h1>
       </div>
     </div>
   </div>
@@ -31,7 +39,7 @@ import { useStore } from "vuex";
 const store = useStore();
 // Vuex 스토어에서 empid를 가져옵니다.
 const empid = computed(() => store.state.account.empid);
-
+const memberid = computed(() => store.state.account.memberid);
 
 // Vuex 스토어에서 사용자 모드 정보를 가져옵니다.
 const isSwitchOn = computed(() => store.state.isUserMode);
@@ -48,9 +56,7 @@ const toggleSwitch = () => {
     // 스위치가 꺼진 경우에 수행할 동작 추가 (사용자 모드)
   }
 };
-
 </script>
-
 
 <style scoped>
 .home {
@@ -82,7 +88,6 @@ const toggleSwitch = () => {
   height: 34px;
   margin-left: 90%;
   position: fixed;
-  
 }
 
 .switch input {
@@ -98,7 +103,7 @@ const toggleSwitch = () => {
   right: 0;
   bottom: 0;
   background-color: rgb(238, 225, 42);
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 34px;
 }
 
@@ -110,19 +115,16 @@ const toggleSwitch = () => {
   left: 4px;
   bottom: 4px;
   background-color: rgb(255, 255, 255);
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
 /* On 상태 스타일 */
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:checked + .slider:before {
   transform: translateX(26px);
 }
-
-
 </style>
-

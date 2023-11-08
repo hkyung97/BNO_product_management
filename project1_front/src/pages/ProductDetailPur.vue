@@ -1,16 +1,10 @@
- <template>
+<template>
   <div class="container">
     <div class="Rectangle1">
       <div>
         <div class="title">상품 상세</div>
         &nbsp;
-        <div class="button">
-          <!-- <router-link to = "/productedit"> -->
-          <router-link :to="'/payment/' + (product1 ? product1.prdid : '')">
-          <button class="register-button">구매</button>
-          </router-link>&nbsp;
-          <button class="register-button1" v-if="isCurrentUserAuthor">문의하기</button>
-        </div>
+        <Payment :product1="product1"/> <!-- member 프롭 추가 -->
       </div>
       &nbsp;
       <div class="Rectangle6">
@@ -20,7 +14,7 @@
         <div class="row">
           <div class="subtitle">
             <span>상품이름</span>
-            <div class = "Rectangle4">
+            <div class="Rectangle4">
               {{ product1.prdname }}
             </div>
           </div>
@@ -51,28 +45,29 @@ import lib from "@/scripts/lib";
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { useRoute} from 'vue-router';
+import Payment from "@/components/Payment.vue";
+// import { useStore } from 'vuex'; // useStore 추가
 
 const route = useRoute();
-// const router = useRouter();
 const prdid = route.params.prdid;
 const product1 = ref(null);
 
 // 세션에서 현재 로그인한 사용자 정보 가져오기
-const currentUserID = ref(sessionStorage.getItem('empid'));
-let isCurrentUserAuthor = ref(false); // isCurrentUserAuthor를 블록 외부에서 정의
+// const currentUserID = ref(sessionStorage.getItem('empid'));
+// let isCurrentUserAuthor = ref(false); // isCurrentUserAuthor를 블록 외부에서 정의
 
 const fetchData = async () => {
   try {
-    console.log('API 요청 시작');
+    // console.log('API 요청 시작');
     const response = await axios.get(`/api/products/${prdid}`);
-    console.log('API 응답:', response.data);
+    // console.log('API 응답:', response.data);
     product1.value = response.data;
 
     // 작성자의 아이디를 가져온 후, 현재 로그인한 사용자와 비교하여 버튼을 표시할지 결정
-    const authorID = response.data.empid;
-    if (authorID) {
-      isCurrentUserAuthor.value = currentUserID.value === authorID;
-    }
+    // const authorID = response.data.empid;
+    // if (authorID) {
+    //   isCurrentUserAuthor.value = currentUserID.value === authorID;
+    // }
   } catch (error) {
     console.error('데이터를 불러오는 중 에러 발생:', error);
   }
@@ -83,6 +78,7 @@ onMounted(() => {
 });
 
 </script>
+
 
 
 <style scoped>
@@ -192,33 +188,6 @@ onMounted(() => {
   align-items: center; /* 내용을 수직 가운데로 정렬합니다. */
 }
 
-.button {
-   text-align: right; /* 내용을 오른쪽 정렬합니다. */
-   margin-right: 10px; /* 오른쪽 여백을 10px로 설정합니다. */
-}
 
-.register-button {
-  width: 100px;
-  height: 48px;
-  background: #0a4efa;
-  border-radius: 30px;
-  color: #fefefe;
-  font-size: 20px;
-  
-}
-
-.register-button1 {
-  width: 100px;
-  height: 48px;
-  background: #f10404;
-  border-radius: 30px;
-  color: #fefefe;
-  font-size: 20px;
-}
-
-.register-button:hover, .register-button1:hover {
-  font-size: 130%;
-  font-weight: bold; /* 텍스트 굵게 설정 */
-}
 
 </style>

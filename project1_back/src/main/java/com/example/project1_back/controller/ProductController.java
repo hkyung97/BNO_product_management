@@ -1,6 +1,7 @@
 package com.example.project1_back.controller;
 
 import com.example.project1_back.entity.Product;
+import com.example.project1_back.repository.MemberRepository;
 import com.example.project1_back.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ public class ProductController {
 
     @Autowired
     ProductRepository productRepository;
+    MemberRepository memberRepository;
 
     @GetMapping("/api/products")
     public List<Product> getProducts() { //entity에 있는 Product(dto개념)가 여기서의 Product

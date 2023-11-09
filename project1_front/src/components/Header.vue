@@ -13,8 +13,16 @@
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-<router-link to="/login" class="text-black" v-if="!isLoggedIn">로그인</router-link>
-      <a to="/login" class="text-black" @click="logout" v-if="isLoggedIn">로그아웃</a>
+                <router-link to="/login" class="text-black" v-if="!isLoggedIn"
+                  >로그인</router-link
+                >
+                <a
+                  to="/login"
+                  class="text-black"
+                  @click="logout"
+                  v-if="isLoggedIn"
+                  >로그아웃</a
+                >
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
@@ -78,7 +86,7 @@
 <script setup>
 import { computed } from "vue";
 import router from "@/scripts/router";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 
 const store = useStore();
 

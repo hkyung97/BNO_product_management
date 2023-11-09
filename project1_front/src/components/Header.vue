@@ -77,25 +77,26 @@
 
 <script setup>
 import { computed } from "vue";
-// import store from "@/scripts/store";
+import router from "@/scripts/router";
 import { useStore } from 'vuex';
 
 const store = useStore();
 
 const isLoggedIn = computed(() => {
-  const empid = sessionStorage.getItem("empid");
-  const memberid = sessionStorage.getItem("memberid");
+  const empid = store.state.account.empid;
+  const memberid = store.state.account.memberid;
   return empid || memberid;
 });
 
 const logout = () => {
-  if (sessionStorage.getItem("empid")) {
+  if (store.state.account.empid) {
+    store.commit("setEmpId", null); // Vuex 스토어에서 empid 제거
     sessionStorage.removeItem("empid");
-    store.commit("setEmpId", null); // Vuex 스토어에서도 제거
-  } else if (sessionStorage.getItem("memberid")) {
+  } else if (store.state.account.memberid) {
+    store.commit("setMemberId", null); // Vuex 스토어에서 memberid 제거
     sessionStorage.removeItem("memberid");
-    store.commit("setMemberId", null); // Vuex 스토어에서도 제거
   }
+  router.push({ path: "/" });
 };
 </script>
 

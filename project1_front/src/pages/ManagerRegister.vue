@@ -2,7 +2,7 @@
   <div class="form-signin w-100 m-auto">
     <h1 class="h3 mb-3 fw-normal">관리자 회원가입</h1>
 
-    <div class="form-floating mb-4">
+    <!-- <div class="form-floating mb-4">
       <input
         type="text"
         class="form-control"
@@ -10,6 +10,18 @@
         v-model="manager.empid"
       />
       <label for="empid">직원 아이디 (ex: emp00000)</label>
+    </div> -->
+
+    <div class="form-floating mb-4">
+      <input
+        type="text"
+        class="form-control"
+        id="emppassword"
+        v-model="manager.emppassword"
+      />
+      <label for="emppassword"
+        >비밀번호(영어,숫자, 특수문자 포함 8자리 이하로 작성해주세요)</label
+      >
     </div>
 
     <div class="form-floating mb-4">
@@ -35,8 +47,8 @@
     <div class="form-floating mb-4">
       <select class="form-control" id="cmpid" v-model="manager.cmpid">
         <option value="">-- 회사 선택 --</option>
-        <option value="cmp00001">비앤오소프트</option>
-        <option value="cmp00002">롯데정보통신</option>
+        <option value="cmp69934">비앤오소프트</option>
+        <option value="cmp04240">롯데정보통신</option>
       </select>
     </div>
 
@@ -94,6 +106,7 @@ const manager = ref({
   emppos: "",
   empaddnum: "",
   empadddetail: "",
+  emppassword: ""
 });
 
 const submitForm = () => {

@@ -1,5 +1,6 @@
 package com.example.project1_back.controller;
 
+import com.example.project1_back.entity.Manager;
 import com.example.project1_back.entity.Member;
 import com.example.project1_back.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,14 +42,14 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/api/product/{prdid}")
-    public ResponseEntity<Member> getCurrentUser(@PathVariable("prdid") HttpServletRequest request) {
-        // 세션에서 현재 사용자 정보 가져오기
-        HttpSession session = request.getSession();
-        Member currentMember = (Member) session.getAttribute("currentMember");
+    @GetMapping("/api/member/{memberid}")
+        public ResponseEntity<Member> getMemberinfo(@PathVariable("memberid") String memberid) {
+        System.out.println(memberid);
 
-        if (currentMember != null) {
-            return ResponseEntity.ok(currentMember);
+        Member member = memberRepository.findBymemberid(memberid);
+//        System.out.println(product);
+        if (member != null) {
+            return ResponseEntity.ok(member);
         } else {
             return ResponseEntity.notFound().build();
         }

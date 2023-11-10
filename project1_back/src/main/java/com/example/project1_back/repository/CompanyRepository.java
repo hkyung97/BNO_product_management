@@ -11,6 +11,8 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
     boolean existsByCmpid(String cmpid);
 
+    Company findBycmpid(String cmpid);
+
 
 }
 

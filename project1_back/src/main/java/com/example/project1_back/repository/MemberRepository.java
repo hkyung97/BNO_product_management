@@ -10,6 +10,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     Member save(Member member);
 
+    Member findBymemberid(String memberid);
+
 
 
 }

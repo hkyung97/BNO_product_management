@@ -43,6 +43,24 @@
                 >
               </li>
               <li class="list-inline-item">
+                <router-link
+                  :to="'/manager/myinfo/' + $store.state.account?.empid"
+                  class="text-black"
+                  v-if="$store.state.account.empid"
+                  >관리자 정보</router-link
+                >
+              </li>
+
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link
+                  :to="'/member/myinfo/' + $store.state.account?.memberid"
+                  class="text-black"
+                  v-if="$store.state.account.memberid"
+                  >회원 정보</router-link
+                >
+              </li>
+              <li class="list-inline-item">
                 <!-- 변경 -->
                 <router-link
                   to="/membermanager"
@@ -130,6 +148,7 @@ const logout = () => {
 <style scoped>
 .row {
   background-color: rgb(248, 245, 211);
+  
 }
 
 .text-black {

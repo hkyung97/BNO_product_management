@@ -3,14 +3,13 @@ package com.example.project1_back.controller;
 import com.example.project1_back.entity.Company;
 
 
+import com.example.project1_back.entity.Manager;
 import com.example.project1_back.repository.CompanyRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CompanyController {
@@ -31,7 +30,7 @@ public class CompanyController {
             company.setCmpid(generatedCmpid);
 
             Company savedCompany = companyRepository.save(company);
-            return ResponseEntity.ok(savedCompany.getCmpname() + " 의 회사등록이 정상 처리되었습니다." );
+            return ResponseEntity.ok(savedCompany.getCmpname() + " 의 회사등록이 정상 처리되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving Company");
         }
@@ -45,5 +44,19 @@ public class CompanyController {
         String cmpid = "cmp" + String.format("%05d", randomNumber);
         return cmpid;
     }
+
+//    @GetMapping("/api/manager/{empid}")
+//    public ResponseEntity<Company> getCompanyinfo(@PathVariable("empid") String cmpid) {
+//        System.out.println(cmpid);
+//
+//        Company company = companyRepository.findBycmpid(cmpid);
+////        System.out.println(product);
+//        if (company != null) {
+//            return ResponseEntity.ok(company);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
 }
 

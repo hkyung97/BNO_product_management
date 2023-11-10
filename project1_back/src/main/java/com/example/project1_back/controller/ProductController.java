@@ -25,7 +25,7 @@ public class ProductController {
     }
 
 
-    
+
 
     @PostMapping("/api/products/add")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
@@ -77,5 +77,3 @@ public class ProductController {
         return ResponseEntity.ok("Product with ID " + prdid + " has been updated.");
     }
 }
-
-

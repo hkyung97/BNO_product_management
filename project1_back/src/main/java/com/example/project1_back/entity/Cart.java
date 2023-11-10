@@ -1,9 +1,6 @@
 package com.example.project1_back.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +11,14 @@ import lombok.Setter;
 public class Cart {
 
     @Id
-    @Column(name = "MEMBER_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CART_NO")
+    private int cartno;
+
+    @Column(name = "MEMBER_ID", length = 8, nullable = false)
     private String memberid;
 
-    @Column(name = "PRD_ID", length = 100, nullable = false)
+    @Column(name = "PRD_ID", length = 8, nullable = false)
     private String prdid;
 
 

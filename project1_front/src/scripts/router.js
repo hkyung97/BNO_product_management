@@ -13,6 +13,7 @@ import ProductDetailPur from "@/pages/ProductDetailPur.vue";
 import Payment from "@/components/Payment.vue";
 import MemberRegister from "@/pages/MemberRegister.vue";
 import MemberManager from "@/pages/MemberManager.vue";
+import CompanyRegister from "@/pages/CompanyRegister.vue";
 
 
 // router를 사용 하겠다.
@@ -32,6 +33,7 @@ const routes = [
     {path: '/payment/:prdid', component:Payment},
     {path: '/memberregister', component: MemberRegister},
     {path: '/membermanager', component: MemberManager},
+    {path: '/companyregister', component: CompanyRegister},
 
 ]
 

@@ -37,8 +37,8 @@
                 <span>회사식별자</span>
                 <select class="Rectangle4" v-model="product.cmpid">
                   <option value="">-- 회사 식별자 선택 --</option>
-                  <option value="cmp00001">비앤오소프트</option>
-                  <option value="cmp00002">롯데정보통신</option>
+                  <option value="cmp69934">비앤오소프트</option>
+                  <option value="cmp04240">롯데정보통신</option>
                 </select>
               </div>
             </div>
@@ -83,9 +83,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+const store = useStore();
+const router = useRouter();
+const empid = store.state.account.empid;
 
 const product = ref({
   imagePreview: null,
@@ -94,14 +99,16 @@ const product = ref({
   prdprice: "",
   prddes: "",
   cmpid: "",
+  empid: "",
 });
 
 const addProduct = async () => {
+  product.value.empid = empid;
   console.log("Selected company:", product.value.cmpid);
   try {
     const response = await axios.post("/api/products/add", product.value);
     alert(response.data);
-    const router = useRouter();
+    // const router = useRouter();
     router.push("/productlist");
   } catch (error) {
     alert("Error adding product: " + error.message);
@@ -112,7 +119,6 @@ const submitForm = () => {
   addProduct();
 };
 </script>
-
 
 <style scoped>
 .container {
@@ -144,7 +150,7 @@ const submitForm = () => {
 .Rectangle4,
 .Rectangle5,
 .Rectangle7 {
-  width: 50%;
+  width: 300px;
   height: 57px;
   background: #fefefe;
   border: 2px #0b4ef9 solid;
@@ -158,7 +164,7 @@ const submitForm = () => {
 
 .Rectangle1 {
   width: 900px;
-  height: 1000px;
+  height: auto;
   background: #fefefe;
   border: 2px #0b4ef9 solid;
   margin-top: 5%; /* 위쪽 여백 추가 */
@@ -210,7 +216,7 @@ const submitForm = () => {
   justify-content: center;
   background: #fefefe;
   border: 2px #0b4ef9 solid;
-  margin-left: 50px; 
+  margin-left: 50px;
 }
 
 .register-button {

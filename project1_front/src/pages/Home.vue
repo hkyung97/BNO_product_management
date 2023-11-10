@@ -1,16 +1,4 @@
 <template>
-  <!-- 사용자 모드와 관리자 모드를 선택하는 버튼 추가 -->
-  <div>
-    <label class="switch">
-      <input
-        type="checkbox"
-        id="toggleSwitch"
-        v-model="isSwitchOn"
-        @change="toggleSwitch"
-      />
-      <span class="slider round"></span>
-    </label>
-  </div>
   <div style="margin-bottom: 5%"></div>
   <div class="home">
     <div class="content">
@@ -41,21 +29,7 @@ const store = useStore();
 const empid = computed(() => store.state.account.empid);
 const memberid = computed(() => store.state.account.memberid);
 
-// Vuex 스토어에서 사용자 모드 정보를 가져옵니다.
-const isSwitchOn = computed(() => store.state.isUserMode);
 
-// 스위치를 토글하는 함수
-const toggleSwitch = () => {
-  store.commit("switchMode", !isSwitchOn.value); // 스위치를 토글할 때 Vuex 스토어의 모드 값을 변경
-
-  if (isSwitchOn.value) {
-    console.log("스위치가 켜졌습니다 (관리자 모드).");
-    // 스위치가 켜진 경우에 수행할 동작 추가 (관리자 모드)
-  } else {
-    console.log("스위치가 꺼졌습니다 (사용자 모드).");
-    // 스위치가 꺼진 경우에 수행할 동작 추가 (사용자 모드)
-  }
-};
 </script>
 
 <style scoped>

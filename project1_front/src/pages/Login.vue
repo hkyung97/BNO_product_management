@@ -35,16 +35,18 @@
       <label for="floatingPassword">비밀번호</label>
     </div>
 
-    <div class="form-check form-switch">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="roleSwitch"
-        v-model="isManager"
-      />
-      <label class="form-check-label" for="roleSwitch">관리자 모드</label>
-    </div>
-
+ <div class="form-check form-switch">
+  <input
+    class="form-check-input"
+    type="checkbox"
+    id="roleSwitch"
+    v-model="isManager"
+  />
+  <label class="form-check-label" for="roleSwitch">
+  </label>
+  <span v-if="isManager">관리자 모드</span>
+  <span v-else>개인 모드</span>
+</div>
     <div style="margin-bottom: 30%"></div>
 
     <button class="btn btn-primary w-100 py-2" @click="submitForm">

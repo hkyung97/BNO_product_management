@@ -26,19 +26,38 @@
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-                <router-link to="/productlist" class="text-black"
+                <router-link
+                  to="/productlist"
+                  class="text-black"
+                  v-if="$store.state.account.empid"
                   >상품관리</router-link
                 >
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-                <router-link to="/membermanager" class="text-black">
+                <router-link
+                  to="/companyregister"
+                  class="text-black"
+                  v-if="$store.state.account.empid"
+                  >회사 정보 등록</router-link
+                >
+              </li>
+              <li class="list-inline-item">
+                <!-- 변경 -->
+                <router-link
+                  to="/membermanager"
+                  class="text-black"
+                  v-if="!isLoggedIn"
+                >
                   회원가입
                 </router-link>
               </li>
               <li class="list-inline-item">
                 <!-- 변경 -->
-                <router-link to="/productpurchasing" class="text-black"
+                <router-link
+                  to="/productpurchasing"
+                  class="text-black"
+                  v-if="$store.state.account.memberid"
                   >상품구매</router-link
                 >
               </li>

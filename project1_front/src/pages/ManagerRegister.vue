@@ -47,8 +47,13 @@
     <div class="form-floating mb-4">
       <select class="form-control" id="cmpid" v-model="manager.cmpid">
         <option value="">-- 회사 선택 --</option>
-        <option value="cmp69934">비앤오소프트</option>
-        <option value="cmp04240">롯데정보통신</option>
+        <option
+          v-for="company in companies"
+          :value="company.cmpid"
+          :key="company.cmpid"
+        >
+          {{ company.cmpname }}
+        </option>
       </select>
     </div>
 
@@ -93,7 +98,7 @@
 <script setup>
 import axios from "axios";
 import router from "@/scripts/router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Address from "@/components/Address.vue";
 
 const manager = ref({
@@ -106,8 +111,10 @@ const manager = ref({
   emppos: "",
   empaddnum: "",
   empadddetail: "",
-  emppassword: ""
+  emppassword: "",
 });
+
+const companies = ref([]);
 
 const submitForm = () => {
   console.log("Selected company:", manager.value);
@@ -124,6 +131,19 @@ const addManager = async () => {
     alert("Error adding manager: " + error.message);
   }
 };
+
+const fetchCompanies = async () => {
+  try {
+    const response = await axios.get("/api/company/all");
+    companies.value = response.data;
+  } catch (error) {
+    console.error("데이터를 불러오는 중 에러 발생:", error);
+  }
+};
+
+onMounted(() => {
+  fetchCompanies();
+});
 </script>
 
 <style scoped>

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CompanyController {
 
@@ -45,18 +47,23 @@ public class CompanyController {
         return cmpid;
     }
 
-//    @GetMapping("/api/manager/{empid}")
-//    public ResponseEntity<Company> getCompanyinfo(@PathVariable("empid") String cmpid) {
-//        System.out.println(cmpid);
-//
-//        Company company = companyRepository.findBycmpid(cmpid);
-////        System.out.println(product);
-//        if (company != null) {
-//            return ResponseEntity.ok(company);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/api/company/{cmpid}")
+    public ResponseEntity<Company> getOneCompanyinfo(@PathVariable("cmpid") String cmpid) {
+        System.out.println(cmpid);
+
+        Company company = companyRepository.findBycmpid(cmpid);
+//        System.out.println(product);
+        if (company != null) {
+            return ResponseEntity.ok(company);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/api/company/all")
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
+    }
 
 }
 

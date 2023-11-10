@@ -38,7 +38,7 @@
                 <router-link
                   to="/companyregister"
                   class="text-black"
-                  v-if="$store.state.account.empid"
+                  
                   >회사 정보 등록</router-link
                 >
               </li>
@@ -147,7 +147,7 @@ const logout = () => {
 
 <style scoped>
 .row {
-  background-color: rgb(248, 245, 211);
+  background-color: rgb(224, 221, 207);
   
 }
 

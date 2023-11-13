@@ -17,11 +17,16 @@
               @change="handleFileUpload"
             />
             <!-- 추가: 이미지 미리보기 -->
-            <img v-if="product.imgpath" :src="product.imgpath" alt="Product Preview" />
+            <img
+              v-if="product.imgpath"
+              :src="product.imgpath"
+              alt="Product Preview"
+            />
+            <input type="hidden" v-model="state.form.imgpath">
           </div>
 
           <div class="body-container1">
-            <div class="row">
+            <!-- <div class="row">
               <div class="subtitle">
                 <span>상품식별자</span>
                 <input
@@ -31,14 +36,19 @@
                   placeholder="상품식별자를 입력하세요( ex : prd00000 )"
                 />
               </div>
-            </div>
+            </div> -->
             <div class="row">
               <div class="subtitle">
                 <span>회사식별자</span>
                 <select class="Rectangle4" v-model="product.cmpid">
                   <option value="">-- 회사 식별자 선택 --</option>
-                  <option value="cmp69934">비앤오소프트</option>
-                  <option value="cmp04240">롯데정보통신</option>
+                  <option
+                    v-for="company in companies"
+                    :key="company.cmpid"
+                    :value="company.cmpid"
+                  >
+                    {{ company.cmpname }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -83,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -93,7 +103,7 @@ const router = useRouter();
 const empid = store.state.account.empid;
 
 const product = ref({
-  imagePreview: null,
+  imgpath: "",
   prdid: "",
   prdname: "",
   prdprice: "",
@@ -102,9 +112,17 @@ const product = ref({
   empid: "",
 });
 
+const state = reactive({
+  form:{
+    imgpath:""
+  }
+})
+
+const companies = ref([]);
+
 const addProduct = async () => {
   product.value.empid = empid;
-  console.log("Selected company:", product.value.cmpid);
+  // console.log("Selected company:", product.value.cmpid);
   try {
     const response = await axios.post("/api/products/add", product.value);
     alert(response.data);
@@ -115,9 +133,37 @@ const addProduct = async () => {
   }
 };
 
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+
+  // 이미지를 서버에 업로드
+  const formData = new FormData();
+  formData.append("file", file);
+
+  axios.post("/api/upload/image", formData)
+    .then((response) => {
+      // 서버에서 받은 이미지 경로를 product 객체에 저장
+      product.value.imagepath = response.data.imgpath;
+      console.log(response.data.imgpath)
+      state.form.imgpath = response.data.imgpath
+  })
+    .catch((error) => {
+      console.error("이미지 업로드 중 에러 발생:", error);
+    });
+};
+
 const submitForm = () => {
   addProduct();
 };
+
+onMounted(async () => {
+  try {
+    const response = await axios.get("/api/company/all");
+    companies.value = response.data;
+  } catch (error) {
+    console.error("회사 정보를 가져오는 중 에러 발생:", error);
+  }
+});
 </script>
 
 <style scoped>

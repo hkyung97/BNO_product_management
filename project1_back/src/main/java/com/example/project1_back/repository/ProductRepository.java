@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     // 메서드 이름을 따라 자동 생성하도록 허용
     Product findByPrdid(String prdid);
 
+    Boolean existsByPrdid(String prdid);
+
 }

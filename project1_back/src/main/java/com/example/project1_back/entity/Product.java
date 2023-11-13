@@ -29,7 +29,7 @@ public class Product {
     @Column(name = "CMP_ID", length = 8)
     private String cmpid;
 
-    @Column(name = "IMG_PATH", length = 100)
+    @Column(name = "IMG_PATH", length = 500)
     private String imgpath;
 
 }

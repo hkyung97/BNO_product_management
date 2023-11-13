@@ -41,11 +41,28 @@ public class ProductController {
     @PostMapping("/api/products/add")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
+
+            String generatedPrdid;
+            do {
+                generatedPrdid = generatePrdid();
+            } while (productRepository.existsByPrdid(generatedPrdid));
+
+            product.setPrdid(generatedPrdid);
+
             Product savedProduct = productRepository.save(product);
             return ResponseEntity.ok("Product saved with ID: " + savedProduct.getPrdid());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving product");
         }
+    }
+
+    public String generatePrdid() {
+        // "cmp" 다음에 5자리 숫자로 생성
+        // 실제로 중복을 검사하고 유니크한 값을 생성해야 합니다.
+        // 여기에서는 단순 예시로 1부터 99999까지의 랜덤한 숫자를 사용합니다.
+        int randomNumber = (int) (Math.random() * 99999) + 1;
+        String prdid = "prd" + String.format("%05d", randomNumber);
+        return prdid;
     }
 
     @GetMapping("/api/products/{prdid}")

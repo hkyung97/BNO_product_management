@@ -19,16 +19,16 @@ public class Payment {
     @Column(name = "PAYMENT_NO")
     private int paymentno;
 
-    @Column(name = "MEMBER_ID", length = 8, nullable = false)
+    @Column(name = "MEMBER_ID", length = 8)
     private String memberid;
 
-    @Column(name = "CART_NO", nullable = false)
+    @Column(name = "CART_NO")
     private int cartno;
 
-    @Column(name = "PRD_ID", length = 8, nullable = false)
+    @Column(name = "PRD_ID", length = 8)
     private String prdid;
 
-    @Column(name = "PAYMENT_DATE", nullable = false)
+    @Column(name = "PAYMENT_DATE")
     private Date paymentdate;
 
 }

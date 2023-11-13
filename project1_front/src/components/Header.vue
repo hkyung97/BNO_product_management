@@ -38,7 +38,7 @@
                 <router-link
                   to="/companyregister"
                   class="text-black"
-                  
+                  v-if="!$store.state.account.memberid"
                   >회사 정보 등록</router-link
                 >
               </li>

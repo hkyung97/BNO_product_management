@@ -58,7 +58,7 @@
               <div class="col">
                 <div><strong>이메일 : </strong> {{ member.memberemail }}</div>
               </div>
-            </div>
+            </div>a
           </div>
         </div>
 

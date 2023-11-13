@@ -1,6 +1,5 @@
 <template>
   <div class="button">
-    <!-- <router-link to = "/productedit"> -->
     <button class="register-button" @click="onPayment" v-if="product1">결제하기</button>&nbsp;
     <!-- <button class="register-button1" v-if="isCurrentUserAuthor">
       문의하기
@@ -24,7 +23,7 @@ export default {
       const data = {
         pg: "kakaopay",
         pay_method: "card",
-        merchant_uid: this.product1.prdid,
+        merchant_uid: this.product1.prdid + new Date().getTime(),
         amount: this.product1.prdprice,
         name: this.product1.prdname,
         buyer_name: "this.member.membername",
@@ -35,6 +34,7 @@ export default {
       };
 
       console.log(data);
+      console.log(new Date().getTime());
 
       IMP.request_pay(data, this.callback);
     },
@@ -51,6 +51,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .button {

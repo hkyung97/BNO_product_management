@@ -9,10 +9,10 @@
       <div class="text">
         <div style="margin-bottom: 50%"></div>
         <h1 v-if="empid">
-          {{ empid }}님, 안녕하세요 상품 등록 및 수정 삭제가 가능합니다.
+          {{ empid }}님, 안녕하세요<br>상품 등록 및 수정 삭제가 가능합니다.
         </h1>
         <h1 v-else-if="memberid">
-          {{ memberid }}님, 안녕하세요 상품구매가 가능합니다.
+          {{ memberid }}님, 안녕하세요<br>상품구매가 가능합니다.
         </h1>
         <h1 v-else>저희 사이트를 방문해 주셔서 감사합니다!</h1>
       </div>

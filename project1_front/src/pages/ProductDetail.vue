@@ -108,7 +108,9 @@ const fetchData = async () => {
 
 const prdDelete = async () => {
   try {
-    await axios.delete(`/api/products/${prdid}`);
+    const empid = sessionStorage.getItem("empid");
+    const data = { empid: empid };
+    await axios.delete(`/api/products/${prdid}`, { data: data });
     router.push("/productlist");
   } catch (error) {
     console.error("상품 삭제 중 에러 발생:", error);

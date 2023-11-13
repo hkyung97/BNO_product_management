@@ -18,7 +18,7 @@
 import lib from "@/scripts/lib";
 
 export default {
-  name: "Card",
+  name: "Card1",
   props: {
     products: Object,
   },

@@ -4,7 +4,7 @@
       <div>
         <div class="title">상품 상세</div>
         &nbsp;
-        <Payment :product1="product1"/> <!-- member 프롭 추가 -->
+        <Payment :product1="product1" :member="member" /> <!-- member 프롭 추가 -->
       </div>
       &nbsp;
       <div class="Rectangle6">
@@ -50,8 +50,9 @@ import Payment from "@/components/Payment.vue";
 
 const route = useRoute();
 const prdid = route.params.prdid;
+// const memberid = route.params.memberid;
 const product1 = ref(null);
-
+// const member = ref({});
 // 세션에서 현재 로그인한 사용자 정보 가져오기
 // const currentUserID = ref(sessionStorage.getItem('empid'));
 // let isCurrentUserAuthor = ref(false); // isCurrentUserAuthor를 블록 외부에서 정의
@@ -63,6 +64,9 @@ const fetchData = async () => {
     // console.log('API 응답:', response.data);
     product1.value = response.data;
 
+    // console.log(memberid);
+    // const memresponse = await axios.get(`/api/member/${memberid}`);
+    // member.value = memresponse.data;
     // 작성자의 아이디를 가져온 후, 현재 로그인한 사용자와 비교하여 버튼을 표시할지 결정
     // const authorID = response.data.empid;
     // if (authorID) {

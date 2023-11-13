@@ -1,14 +1,22 @@
 package com.example.project1_back.controller;
 
 import com.example.project1_back.entity.Product;
-import com.example.project1_back.repository.MemberRepository;
+import com.example.project1_back.entity.ProductDeleteLog;
+import com.example.project1_back.repository.ProductDeleteLogRepository;
+import com.example.project1_back.repository.ProductEditLogRepository;
 import com.example.project1_back.repository.ProductRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -16,7 +24,10 @@ public class ProductController {
 
     @Autowired
     ProductRepository productRepository;
-    MemberRepository memberRepository;
+    @Autowired
+    ProductDeleteLogRepository productDeleteLogRepository;
+    @Autowired
+    ProductEditLogRepository productEditLogRepository;
 
     @GetMapping("/api/products")
     public List<Product> getProducts() { //entity에 있는 Product(dto개념)가 여기서의 Product
@@ -50,10 +61,26 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping ("/api/products/{prdid}")
-    public ResponseEntity<String> deleteProductById(@PathVariable("prdid") String prdid) {
+    @DeleteMapping("/api/products/{prdid}")
+    public ResponseEntity<String> deleteProductById(
+            @PathVariable("prdid") String prdid,
+            @RequestBody Map<String, String> data){
         try {
+            // 세션에서 사용자 ID 가져오기
+//            HttpSession session = request.getSession();
+////            String empid = (String) session.getAttribute("empid");
+////            System.out.println(session.getAttribute(""));
+
+            String empid = data.get("empid");
+            System.out.println(empid);
+            // 로그 디비에 저장
+            ProductDeleteLog productDeleteLog = new ProductDeleteLog();
+            productDeleteLog.setEmpid(empid);
+            productDeleteLog.setPrdid(prdid);
+            productDeleteLog.setActivitytime(LocalDateTime.now());
+            productDeleteLogRepository.saveAndFlush(productDeleteLog);
             productRepository.deleteById(prdid);
+
             return ResponseEntity.ok(prdid + " 가 삭제 되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting product");
